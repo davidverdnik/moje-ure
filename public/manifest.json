@@ -1,0 +1,11 @@
+{
+  "name": "Moje ure 2026",
+  "short_name": "Moje ure",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#eef2f7",
+  "theme_color": "#2563eb",
+  "description": "Evidenca delovnih ur, nadur, dopusta, bolniške in praznikov za leto 2026.",
+  "icons": []
+}
