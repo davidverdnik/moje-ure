@@ -1,14 +1,8 @@
-# Moje ure 2026
+# Moje ure 2026 – v2
 
-Končna React/Vite verzija za Vercel.
+Dodano:
+- nova vrsta dneva: Ure v dobro
+- letni in mesečni seštevek ur v dobro
+- nadure ostanejo ločeno za izplačilo
 
-## Nalaganje na GitHub
-Na GitHub naloži vse datoteke iz tega ZIP-a in prepiši stare.
-
-## Vercel
-Vercel samodejno zazna Vite projekt:
-- Build Command: `npm run build`
-- Output Directory: `dist`
-
-## Supabase
-Aplikacija uporablja tabelo `work_hours_2026`.
+Naloži vse datoteke na GitHub. Vercel bo samodejno objavil novo verzijo.

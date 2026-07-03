@@ -5,6 +5,7 @@
   --red:#dc2626; --redBg:#fee2e2; --redLine:#fca5a5;
   --blue:#2563eb; --blueBg:#dbeafe; --blueLine:#93c5fd;
   --orange:#ea580c; --orangeBg:#ffedd5; --orangeLine:#fdba74;
+  --purple:#7c3aed; --purpleBg:#ede9fe; --purpleLine:#c4b5fd;
   --grayBg:#f3f4f6; --grayLine:#d1d5db;
 }
 * { box-sizing:border-box; }
@@ -109,6 +110,7 @@ button.good { background:var(--green); }
 .daycard.holiday { background:var(--redBg); border-color:var(--redLine); }
 .daycard.vacation { background:var(--blueBg); border-color:var(--blueLine); }
 .daycard.sick { background:var(--orangeBg); border-color:var(--orangeLine); }
+.daycard.goodhours { background:var(--purpleBg); border-color:var(--purpleLine); }
 .dayhead { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:10px; }
 .date { font-weight:900; font-size:16px; }
 .sub { color:var(--muted); font-size:12px; margin-top:2px; }

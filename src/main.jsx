@@ -225,8 +225,8 @@ function App() {
     const norm = parseHours(settings.normHours || "8:00");
     const vacationStart = Number(settings.vacationStart || 0);
 
-    let yWork = 0, yHoliday = 0, yOver = 0, vac = 0, sick = 0;
-    let mWork = 0, mHoliday = 0, mOver = 0, mVac = 0, mSick = 0;
+    let yWork = 0, yHoliday = 0, yOver = 0, yGood = 0, vac = 0, sick = 0;
+    let mWork = 0, mHoliday = 0, mOver = 0, mGood = 0, mVac = 0, mSick = 0;
 
     for (let m = 0; m < 12; m++) {
       for (let d = 1; d <= daysInMonth(m); d++) {
@@ -235,14 +235,17 @@ function App() {
 
         let work = 0;
         let holidayHours = 0;
+        let goodHours = 0;
         const overtime = parseHours(day.overtime);
 
         if (day.type === "delo") work = parseHours(day.work);
         if (day.type === "praznik") holidayHours = norm;
+        if (day.type === "ure_v_dobro") goodHours = parseHours(day.work);
 
         yWork += work;
         yHoliday += holidayHours;
         yOver += overtime;
+        yGood += goodHours;
 
         if (day.type === "dopust") vac++;
         if (day.type === "bolniska") sick++;
@@ -251,6 +254,7 @@ function App() {
           mWork += work;
           mHoliday += holidayHours;
           mOver += overtime;
+          mGood += goodHours;
           if (day.type === "dopust") mVac++;
           if (day.type === "bolniska") mSick++;
         }
@@ -258,8 +262,8 @@ function App() {
     }
 
     return {
-      yWork, yHoliday, yOver, vac, sick,
-      mWork, mHoliday, mOver, mVac, mSick,
+      yWork, yHoliday, yOver, yGood, vac, sick,
+      mWork, mHoliday, mOver, mGood, mVac, mSick,
       vacationLeft: vacationStart - vac
     };
   }, [data, month]);
@@ -393,6 +397,7 @@ function App() {
               <Stat title="Letno opravljene ure" value={fmtHours(totals.yWork)} />
               <Stat title="Letne praznične ure" value={fmtHours(totals.yHoliday)} />
               <Stat title="Letne nadure" value={fmtHours(totals.yOver)} />
+              <Stat title="Letne ure v dobro" value={fmtHours(totals.yGood)} />
               <Stat title="Preostali dopust" value={`${totals.vacationLeft} dni`} />
               <Stat title="Bolniška skupaj" value={`${totals.sick} dni`} />
             </div>
@@ -432,6 +437,7 @@ function App() {
               <Stat title="Mesec: opravljene ure" value={fmtHours(totals.mWork)} />
               <Stat title="Mesec: praznične ure" value={fmtHours(totals.mHoliday)} />
               <Stat title="Mesec: nadure" value={fmtHours(totals.mOver)} />
+              <Stat title="Mesec: ure v dobro" value={fmtHours(totals.mGood)} />
               <Stat title="Mesec: dopust" value={`${totals.mVac} dni`} />
               <Stat title="Mesec: bolniška" value={`${totals.mSick} dni`} />
             </div>
@@ -447,6 +453,7 @@ function App() {
                 if (day.type === "praznik") classes.push("holiday");
                 else if (day.type === "dopust") classes.push("vacation");
                 else if (day.type === "bolniska") classes.push("sick");
+                else if (day.type === "ure_v_dobro") classes.push("goodhours");
                 else if (touched(day, k)) classes.push("filled");
 
                 return (
@@ -461,7 +468,7 @@ function App() {
 
                     <div className="fields">
                       <div>
-                        <label>Opravljene ure</label>
+                        <label>Opravljene ure / ure v dobro</label>
                         <input value={day.work} onChange={e => updateDay(k, "work", e.target.value)} inputMode="numeric" placeholder="8:00" />
                       </div>
 
@@ -477,6 +484,7 @@ function App() {
                           <option value="dopust">Dopust</option>
                           <option value="bolniska">Bolniška</option>
                           <option value="praznik">Praznik</option>
+                          <option value="ure_v_dobro">Ure v dobro</option>
                           <option value="prosto">Prosto</option>
                         </select>
                       </div>
@@ -499,7 +507,7 @@ function App() {
 
             <p className="note">
               Ure lahko vpisuješ kot 8:00, 7:30, 1:15 ali tudi kot 8 / 7.5.
-              Prazniki so rdeči, dopust moder, bolniška oranžna, vpisani delovni dnevi zeleni.
+              Prazniki so rdeči, dopust moder, bolniška oranžna, ure v dobro vijolične, vpisani delovni dnevi zeleni. Nadure se vodijo posebej za izplačilo.
             </p>
           </>
         )}
